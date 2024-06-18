@@ -14,7 +14,6 @@ export async function testActions() {
     let data;
     try {
         const text = await response.text();
-        console.error('Response text:', text);
         data = JSON.parse(text);
     } catch (error) {
         console.error('Error parsing JSON:', error);
