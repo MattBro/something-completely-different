@@ -3,9 +3,6 @@ import Link from "next/link";
 import ClientSideTest from "./components/client-side-test";
 
 export default async function Home() {
-  const response = await fetch('http://localhost:8000/api/python');
-  const data = await response.json();
-  const message = data.message;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -23,7 +20,6 @@ export default async function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            By things{message}
             <Image
               src="/vercel.svg"
               alt="Vercel Logo"
@@ -83,7 +79,7 @@ export default async function Home() {
         </a>
 
         <ClientSideTest />
-        
+
         <a
           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
