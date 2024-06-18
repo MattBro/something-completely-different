@@ -6,21 +6,21 @@ const BASE_URL =
     : "http://localhost:8000";
 
 export async function testActions() {
-    console.log('Fetching data from:', BASE_URL + '/api/python');
+    console.error('Fetching data from:', BASE_URL + '/api/python');
     const response = await fetch(BASE_URL + '/api/python');
-    console.log('Response status:', response.status);
-    console.log('Response headers:', response.headers);
+    console.error('Response status:', response.status);
+    console.error('Response headers:', response.headers);
 
     let data;
     try {
         const text = await response.text();
-        console.log('Response text:', text);
+        console.error('Response text:', text);
         data = JSON.parse(text);
     } catch (error) {
         console.error('Error parsing JSON:', error);
         throw new Error('Failed to parse JSON response');
     }
 
-    console.log('Parsed data:', data);
+    console.error('Parsed data:', data);
     return data;
 }
