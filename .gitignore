@@ -36,5 +36,3 @@ next-env.d.ts
 
 # I don't think you're supposed to check in the venv (pat 6/18/2024)
 .venv
-
-/api/__pycache__
