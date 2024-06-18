@@ -6,8 +6,8 @@ const BASE_URL =
     : "http://localhost:8000";
 
 export async function testActions() {
-    console.error('Fetching data from:', BASE_URL + '/api/python');
     const response = await fetch(BASE_URL + '/api/python');
+    console.error('Fetching data from:', BASE_URL + '/api/python');
     console.error('Response status:', response.status);
     console.error('Response headers:', response.headers);
 
