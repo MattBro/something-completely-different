@@ -4,42 +4,36 @@ const BASE_URL =
   process.env.NODE_ENV === "production"
     ? 'https://' + process.env.VERCEL_URL
     : "http://localhost:8000";
-
 export async function testActions() {
     const response = await fetch(BASE_URL + '/api/p/python');
-    const reader = response.body?.getReader();
-    let result = '';
-    if(reader) {
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            result += new TextDecoder().decode(value);
-            console.error(new TextDecoder().decode(value));
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    if (!response.body) {
+        throw new Error('Response body is null');
+    }
+    const reader = response.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let done = false;
 
-            // Stream the value down to the client
-            
+    while (!done) {
+        const { value, done: readerDone } = await reader.read();
+        if (readerDone) {
+            done = true;
+        } else {
+            chunks.push(value);
         }
     }
 
+    const completeData = new TextDecoder().decode(
+        chunks.reduce((acc, chunk, index) => {
+            acc.set(chunk, index === 0 ? 0 : chunks.slice(0, index).reduce((sum, chunk) => sum + chunk.length, 0));
+            return acc;
+        }, new Uint8Array(chunks.reduce((sum, chunk) => sum + chunk.length, 0)))
+    );
 
-    console.error('Fetching data from:', BASE_URL + '/api/p/python');
-    console.error('Response status:', response.status);
-    console.error('Response headers:', response.headers);
-
-    let data;
-    try {
-        // const text = await response.text();
-        // //data = JSON.parse(text);
-        // console.error(text)
-
-
-    } catch (error) {
-        console.error('Error parsing JSON:', error);
-        throw new Error('Failed to parse JSON response');
-    }
-
-    console.error('Parsed data:', data);
-    return data;
+    console.log(completeData);
+    return completeData;
 }
 
 
