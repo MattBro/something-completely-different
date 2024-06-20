@@ -15,6 +15,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta httpEquiv="Content-Language" content="en"></meta>
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
